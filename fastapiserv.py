@@ -54,10 +54,10 @@ def generate_ofdm_nopilots(fftsize_arg, NN):
     return ofdm_time
 
 
-def generate_ofdm_withpilots(fftsize_arg, NN):
+def generate_ofdm_withpilots(fftsize_arg, NN, pilots_num):
     gsize = 100   
     fftsize = fftsize_arg
-    P = 200
+    P = pilots_num
 
     K = fftsize - 2*gsize - 1 + 1  # -1 of central zero, and +1 of right guard
 
@@ -122,3 +122,17 @@ async def read_root_p(fftsize, Modulation_order):
     arr_im = json.dumps(arr.imag.tolist())
 
     return {'answer':{'real':arr_r, 'imag':arr_im}}
+
+
+@app.get("/tOFDM/{fftsize}/{Modulation_order}/{pilots_num}")
+async def read_root_t(fftsize, Modulation_order, pilots_num):
+
+    arr, a, c = generate_ofdm_withpilots(int(fftsize), int(Modulation_order), int(pilots_num))
+    
+    #gg = ', '.join(map(lambda x: str(x)[1:-1], arr.tolist()))
+    gg = list(map(lambda x: str(x)[1:-1], arr.tolist()))
+    #gg = ', '.join(map(lambda x: str(x), arr.real.tolist()))
+    print(gg[:50])
+    print(type(gg))
+
+    return json.dumps(gg)
