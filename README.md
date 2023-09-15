@@ -5,4 +5,9 @@ The application is used to fast get typical OFDM signals for testing purposes re
 Future plans:		
 - define endpoints for OFDM with pilots 
 - define endpoints for OFDM without pilots
-- define endpoints for QAM modulation   
+- define endpoints for QAM modulation  
+
+Libs used:
+- Numpy
+- Commpy
+- FastApi (and it's dependencies)
