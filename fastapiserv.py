@@ -1,5 +1,5 @@
-from typing import Union
-from fastapi import FastAPI
+from typing import Union, Any
+from fastapi import FastAPI, Request, Body
 import numpy as np
 import commpy as cp
 import json
@@ -16,6 +16,11 @@ def DFT(t):
 
 def SHIFT(s):
     return np.fft.fftshift(s)
+
+
+class Marray(BaseModel):
+    boasdad: str
+    arr: list[float]
 
 
 class my_item(BaseModel):
@@ -123,3 +128,21 @@ async def read_root_t(fftsize: int, Modulation_order: int, pilots_num: int):
     response = json.dumps(list_for_response)
 
     return response
+
+
+@app.post('/process_integers/')
+async def process_ofdm_data(data: Marray):
+    
+    print(data)
+    print(data.boasdad)
+    print(data.arr)
+    print(type(data.arr))
+
+
+@app.post('/post_marr/')
+async def process_marr(data: Marray):
+    payload = await data.body()
+    decoded_payload = payload.decode('utf-8')
+    print(decoded_payload)
+    return payload
+    
