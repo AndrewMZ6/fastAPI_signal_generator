@@ -105,34 +105,21 @@ def generate_ofdm_withpilots(fftsize_arg, NN, pilots_num):
 
 
 @app.get("/OFDM/{fftsize}/{Modulation_order}")
-async def read_root(fftsize, Modulation_order):
+async def get_ofdm_no_pilots(fftsize: int, Modulation_order: int):
 
-    arr = generate_ofdm_nopilots(int(fftsize), int(Modulation_order))
-    arr_r = json.dumps(arr.real.tolist())
-    arr_im = json.dumps(arr.imag.tolist())
-    return {'answer':{'real':arr_r, 'imag':arr_im}}
+    arr: np.ndarray = generate_ofdm_nopilots(fftsize, Modulation_order)
+    list_for_response: list = list(map(lambda x: str(x)[1:-1], arr.tolist()))
+    response = json.dumps(list_for_response)
 
-
-
-@app.get("/pOFDM/{fftsize}/{Modulation_order}")
-async def read_root_p(fftsize, Modulation_order):
-
-    arr, a, c = generate_ofdm_withpilots(int(fftsize), int(Modulation_order))
-    arr_r = json.dumps(arr.real.tolist())
-    arr_im = json.dumps(arr.imag.tolist())
-
-    return {'answer':{'real':arr_r, 'imag':arr_im}}
+    return response
 
 
-@app.get("/tOFDM/{fftsize}/{Modulation_order}/{pilots_num}")
-async def read_root_t(fftsize, Modulation_order, pilots_num):
 
-    arr, a, c = generate_ofdm_withpilots(int(fftsize), int(Modulation_order), int(pilots_num))
-    
-    #gg = ', '.join(map(lambda x: str(x)[1:-1], arr.tolist()))
-    gg = list(map(lambda x: str(x)[1:-1], arr.tolist()))
-    #gg = ', '.join(map(lambda x: str(x), arr.real.tolist()))
-    print(gg[:50])
-    print(type(gg))
+@app.get("/pOFDM/{fftsize}/{Modulation_order}/{pilots_num}")
+async def read_root_t(fftsize: int, Modulation_order: int, pilots_num: int):
 
-    return json.dumps(gg)
+    arr, a, c = generate_ofdm_withpilots(fftsize, Modulation_order, pilots_num)
+    list_for_response: list = list(map(lambda x: str(x)[1:-1], arr.tolist()))
+    response = json.dumps(list_for_response)
+
+    return response
