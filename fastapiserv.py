@@ -23,12 +23,31 @@ class Marray(BaseModel):
     arr: list[float]
 
 
-class my_item(BaseModel):
-    name: str
-    description: str | None = None
-    price: float 
-    tax: float | None = None
-    tags: list[str] = []
+class Matlab_data(BaseModel):
+    complex: bool
+    real_data: list[float] = []
+    imag_data: list[float] = []
+
+
+# class my_item(BaseModel):
+#     name: str
+#     description: str | None = None
+#     price: float 
+#     tax: float | None = None
+#     tags: list[str] = []
+
+
+
+def np_complex_arr_to_json(complex_data: np.ndarray) -> str:
+    L = complex_data.tolist()
+
+    # original list looks like this [(-3+3j), (-3+3j), (1-3j)] so [1:-1] removes bracets
+    M = list(map(lambda x: str(x)[1:-1], L))
+
+    response = json.dumps(M)
+
+    return response
+
 
 
 def generate_ofdm_nopilots(fftsize_arg, NN):
@@ -145,4 +164,19 @@ async def process_marr(data: Marray):
     decoded_payload = payload.decode('utf-8')
     print(decoded_payload)
     return payload
-    
+
+
+@app.post('/get_fft/')
+async def get_fft(data: Matlab_data):
+
+    # create one complex values array from two real values arrays
+    complex_data = np.vectorize(complex)(data.real_data, data.imag_data)
+
+    # make a simple fft operation
+    ffted_data = np.fft.fft(complex_data)
+
+    # convert complex numpy array into json format
+    response_data = np_complex_arr_to_json(ffted_data)
+
+
+    return response_data
