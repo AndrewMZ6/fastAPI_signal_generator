@@ -19,14 +19,14 @@ app = FastAPI()
 
 class Marray(BaseModel):
     boasdad: str
-    arr: list[float]
+    arr: list
 
 
 
 class Matlab_data(BaseModel):
     complex: bool
-    real_data: list[float] = []
-    imag_data: list[float] = []
+    real_data: list = []
+    imag_data: list = []
 
 
 
