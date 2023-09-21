@@ -7,7 +7,8 @@ from pydantic import BaseModel
 from data_processing.process_data import (
                                             generate_ofdm_nopilots,
                                             np_complex_arr_to_json,
-                                            generate_ofdm_withpilots
+                                            generate_ofdm_withpilots,
+                                            addzeros
 
                                           )
 
@@ -84,6 +85,15 @@ async def get_fft(data: Matlab_data):
 
     return response_data
 
+
+@app.get('/ofdm_fft_bw_fs/{fftsize}/{Modulation_order}/{BW}/{fs}')
+async def get_ofdm_fft_bw_fs(fftsize: int=1024, Modulation_order: int=4, BW: float=10e6, fs: float=50e6):
+    arr = generate_ofdm_nopilots(fftsize, Modulation_order)
+    interpolated_size = int((fs*fftsize)/BW)
+    arr_interpolated = addzeros(arr, interpolated_size)
+    response = np_complex_arr_to_json(np.fft.ifft(arr_interpolated))
+
+    return response
 
 
 # TODO:

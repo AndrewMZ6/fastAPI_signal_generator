@@ -15,6 +15,15 @@ def SHIFT(s):
     return np.fft.fftshift(s)
 
 
+def addzeros(sig: np.ndarray, interpolated_size: int) -> np.ndarray:
+    spectrum = np.fft.fft(sig)
+    L = len(spectrum)
+    delimiter = int(L/2)
+    zeros_to_insert = np.zeros(interpolated_size - L, dtype=complex)
+    result = np.concatenate((spectrum[:delimiter], zeros_to_insert, spectrum[delimiter:]))
+    return result
+
+
 def np_complex_arr_to_json(complex_data: np.ndarray) -> str:
     L = complex_data.tolist()
 
@@ -28,27 +37,17 @@ def np_complex_arr_to_json(complex_data: np.ndarray) -> str:
 def generate_ofdm_nopilots(fftsize: int, M_order: int) -> np.ndarray:
     gsize = 100
 
-    K = fftsize - 2*gsize - 1 + 1  # -1 of central zero, and +1 of right guard
-
-    # bits per symbol
-    mu = int(np.log2(M_order))
-
-    # number of payload bits per OFDM symbol
-    payLoadBits_per_OFDM = K*mu
-
-    # generate random bits
-    bits = np.random.randint(low=0, high=2, size=payLoadBits_per_OFDM)
-
-    # modulate
+    K = fftsize - 2*gsize - 1 + 1                                           # -1 of central zero, and +1 of right guard
+    mu = int(np.log2(M_order))                                              # bits per symbol
+    payLoadBits_per_OFDM = K*mu                                             # number of payload bits per OFDM symbol
+    bits = np.random.randint(low=0, high=2, size=payLoadBits_per_OFDM)      # generate random bits
+    
     M = cp.modulation.QAMModem(2**mu)
     modBits = M.modulate(bits)
-
     ofdmSymbol = np.concatenate([np.zeros(gsize, dtype=complex), modBits[:int(K/2)], np.zeros(1, dtype=complex), modBits[int(K/2):], np.zeros(gsize-1, dtype=complex)])
-
     ofdmSymbolShifted = SHIFT(ofdmSymbol)
     ofdm_time = IDFT(ofdmSymbolShifted)
 
-    # return time samples
     return ofdm_time
 
 
