@@ -11,7 +11,7 @@ request_body = jsonencode(struct('complex', true, 'real_data', real_data, 'imag_
 options = weboptions('MediaType', 'application/json');
 
 
-x = webwrite('http://127.0.0.1:8088/get_fft', request_body, options);
+x = webwrite('https://ofdm-buddy.onrender.com/get_fft', request_body, options);
 
 y = cellfun(@str2double, jsondecode(x));
 
@@ -27,7 +27,7 @@ close all; clearvars; clc;
 
 modulation_order = 16;
 fftsize = 1024;
-endpoint_url = 'http://127.0.0.1:8088/OFDM/';
+endpoint_url = 'https://ofdm-buddy.onrender.com/OFDM/';
 
 
 api_url = [endpoint_url, num2str(fftsize), '/', num2str(modulation_order)];
