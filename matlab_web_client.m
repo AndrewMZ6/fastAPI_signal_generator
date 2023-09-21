@@ -43,13 +43,13 @@ scatterplot(fft(response));
 %% Acquire ofdm symbol without pilots
 close all; clearvars; clc;
 
-modulation_order = 64;
+modulation_order = 4;
 fftsize = 1024;
-bw = 5e6;
-fs = 50e6;
+bw = 2e6;
+fs = 10e6;
 
 
-endpoint_url = 'http://127.0.0.1:8088/ofdm_fft_bw_fs/';
+endpoint_url = 'https://ofdm-buddy.onrender.com/ofdm_fft_bw_fs/';
 
 
 api_url = [endpoint_url, num2str(fftsize), '/', num2str(modulation_order), '/', num2str(bw), '/', num2str(fs)];
@@ -62,3 +62,7 @@ figure;
     xlabel('freq, MHz');
     
 scatterplot(fft(response));
+
+
+
+

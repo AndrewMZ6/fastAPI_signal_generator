@@ -24,13 +24,31 @@ def addzeros(sig: np.ndarray, interpolated_size: int) -> np.ndarray:
     return result
 
 
-def np_complex_arr_to_json(complex_data: np.ndarray) -> str:
-    L = complex_data.tolist()
+def use_ofdm_carrier_signal(signal_spectrum: np.ndarray, fc: float, fs: float) -> np.ndarray:
+    time_domain_signal = np.fft.ifft(signal_spectrum)
+    Ts = 1/fs
+    timeline = np.arange(0, time_domain_signal.size*Ts, Ts)
+    I_carr = np.cos(2*np.pi*fc*timeline)
+    Q_carr = -np.sin(2*np.pi*fc*timeline)
 
-    # original list looks like this [(-3+3j), (-3+3j), (1-3j)] so [1:-1] removes bracets
-    M = list(map(lambda x: str(x)[1:-1], L))
+    output = np.multiply(time_domain_signal.real, I_carr) + np.multiply(time_domain_signal.imag, Q_carr)
+
+    return output
+
+
+def np_arr_to_json(non_complex_data: np.ndarray) -> str:
+    L = non_complex_data.tolist()
+    M = list(map(lambda x: str(x), L))
     response = json.dumps(M)
 
+    return response
+
+
+def np_complex_arr_to_json(complex_data: np.ndarray) -> str:
+    L = complex_data.tolist()
+    M = list(map(lambda x: str(x)[1:-1], L))    # original list looks like this [(-3+3j), 
+    response = json.dumps(M)                    # (-3+3j), (1-3j)] so [1:-1] removes bracets
+    
     return response
 
 
