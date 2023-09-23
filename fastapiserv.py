@@ -7,7 +7,10 @@ from pydantic import BaseModel
 from data_processing.process_data import (
                                             generate_ofdm_nopilots,
                                             np_complex_arr_to_json,
-                                            generate_ofdm_withpilots
+                                            generate_ofdm_withpilots,
+                                            addzeros,
+                                            use_ofdm_carrier_signal,
+                                            np_arr_to_json
 
                                           )
 
@@ -84,6 +87,26 @@ async def get_fft(data: Matlab_data):
 
     return response_data
 
+
+@app.get('/ofdm_fft_bw_fs/{fftsize}/{Modulation_order}/{BW}/{fs}')
+async def get_ofdm_fft_bw_fs(fftsize: int, Modulation_order: int, BW: float, fs: float):
+    arr = generate_ofdm_nopilots(fftsize, Modulation_order)
+    interpolated_size = int((fs*fftsize)/BW)
+    arr_interpolated = addzeros(arr, interpolated_size)
+    response = np_complex_arr_to_json(np.fft.ifft(arr_interpolated))
+
+    return response
+
+
+@app.get('/ofdm_fft_bw_fs_carr/{fftsize}/{Modulation_order}/{BW}/{fs}/{fc}')
+async def get_ofdm_fft_bw_fs(fftsize: int, Modulation_order: int, BW: float, fs: float, fc: float):
+    arr = generate_ofdm_nopilots(fftsize, Modulation_order)
+    interpolated_size = int((fs*fftsize)/BW)
+    arr_interpolated = addzeros(arr, interpolated_size)
+    carried_signal = use_ofdm_carrier_signal(arr_interpolated, fc, fs)
+    response = np_arr_to_json(carried_signal)
+
+    return response
 
 
 # TODO:
