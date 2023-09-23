@@ -119,3 +119,19 @@ def generate_ofdm_withpilots(fftsize: int, M_order: int, pilots_num: int) -> tup
     return ofdm_time, (pilotCarriers, dataCarriers), bits
 
 
+
+def get_ofdm_fftsize_modorder(fftsize: int, Modulation_order: int):
+    arr = generate_ofdm_nopilots(fftsize, Modulation_order)
+    response = np_complex_arr_to_json(arr)
+
+    return response
+
+
+def get_ofdm_fft_bw_fs(fftsize: int, Modulation_order: int, BW: float, fs: float, fc: float):
+    arr = generate_ofdm_nopilots(fftsize, Modulation_order)
+    interpolated_size = int((fs*fftsize)/BW)
+    arr_interpolated = addzeros(arr, interpolated_size)
+    carried_signal = use_ofdm_carrier_signal(arr_interpolated, fc, fs)
+    response = np_arr_to_json(carried_signal)
+
+    return response

@@ -1,8 +1,12 @@
+import uvicorn
 from typing import Union, Any
 from fastapi import FastAPI, Request, Body
 import numpy as np
 import json
+from settings.settings import settings
 from pydantic import BaseModel
+from sine.router import router as sine_router
+from ofdm.router import router as ofdm_router
 
 from data_processing.process_data import (
                                             generate_ofdm_nopilots,
@@ -17,7 +21,8 @@ from data_processing.process_data import (
 
 
 app = FastAPI()
-
+app.include_router(prefix='/sine', router=sine_router)
+app.include_router(prefix='/ofdm', router=ofdm_router)
 
 
 class Marray(BaseModel):
@@ -114,3 +119,8 @@ async def get_ofdm_fft_bw_fs(fftsize: int, Modulation_order: int, BW: float, fs:
 #   2. seek through pydantic models
 #   3. may be improve matlab client interaction
 #   4. add some database interaction 
+
+
+
+if __name__ == '__main__':
+    uvicorn.run(app=app, host=settings.app_host, port=settings.app_port, loop='auto')
