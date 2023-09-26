@@ -114,6 +114,15 @@ async def get_ofdm_fft_bw_fs(fftsize: int, Modulation_order: int, BW: float, fs:
     return response
 
 
+@app.get('/get_error')
+async def generate_error():
+    error_message = {
+            'error_status':'internal_error',
+            'error_message':'too little to know'
+    }
+
+    return json.dumps(error_message)
+
 # TODO:
 #   1. look up some routing thingy
 #   2. seek through pydantic models
