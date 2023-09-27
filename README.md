@@ -11,6 +11,7 @@ Libs used:
 - Numpy
 - Commpy
 - FastApi (and it's dependencies)
+- SQLAlchemy
 
 
 The planned design of the application is pictuded below   
