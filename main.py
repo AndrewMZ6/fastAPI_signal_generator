@@ -6,6 +6,7 @@ import json
 from settings.settings import settings
 from pydantic import BaseModel
 from sine.router import router as sine_router
+from test_api_routing.router import router as test_api_router
 from ofdm.router import router as ofdm_router
 
 from data_processing.process_data import (
@@ -20,9 +21,10 @@ from data_processing.process_data import (
 
 
 
-app = FastAPI()
+app = FastAPI(title='Ofdm buddy')
 app.include_router(prefix='/sine', router=sine_router)
 app.include_router(prefix='/ofdm', router=ofdm_router)
+app.include_router(prefix='/test-api', router=test_api_router)
 
 
 class Marray(BaseModel):
@@ -119,6 +121,21 @@ async def get_ofdm_fft_bw_fs(fftsize: int, Modulation_order: int, BW: float, fs:
 #   2. seek through pydantic models
 #   3. may be improve matlab client interaction
 #   4. add some database interaction 
+
+
+# @app.get('/test-api/arg1')
+# async def test_arg1():
+#     return {'response':'test-arg1'}
+
+
+
+
+# @app.get('/test-api')
+# async def test1():
+#     return {'response':'test1'}
+
+
+
 
 
 
