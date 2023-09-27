@@ -11,3 +11,5 @@ Libs used:
 - Numpy
 - Commpy
 - FastApi (and it's dependencies)
+
+![Пустой диаграммой (1)](https://github.com/AndrewMZ6/fastAPI_signal_generator/assets/40640833/45c5bb12-5cbf-4b41-aba7-113dd81511a7)
