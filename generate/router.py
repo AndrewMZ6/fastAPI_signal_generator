@@ -1,9 +1,9 @@
 from fastapi import APIRouter
-from data_processing.process_data import get_ofdm_fftsize_modorder, get_ofdm_fft_bw_fs
+from ofdm.router import router as ofdm_router
 
 
 router = APIRouter()
-
+router.include_router(prefix='/ofdm')
 
 @router.get('/')
 async def index():
@@ -13,7 +13,7 @@ async def index():
 	}
 
 
-@router.get('/{fftsize}/{Modulation_order}')
+@router.get('/ofdm{fftsize}/{Modulation_order}')
 async def get_ofdm_no_pilots(fftsize: int, Modulation_order: int):
     response = get_ofdm_fftsize_modorder(fftsize, Modulation_order)
 

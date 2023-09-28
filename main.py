@@ -5,8 +5,8 @@ import numpy as np
 import json
 from settings.settings import settings
 from pydantic import BaseModel
-from sine.router import router as sine_router
-from ofdm.router import router as ofdm_router
+from generate.router import router as generate_router
+from process.router import router as process_router
 
 from data_processing.process_data import (
                                             generate_ofdm_nopilots,
@@ -15,20 +15,17 @@ from data_processing.process_data import (
                                             addzeros,
                                             use_ofdm_carrier_signal,
                                             np_arr_to_json
-
                                           )
 
 
-
 app = FastAPI()
-app.include_router(prefix='/sine', router=sine_router)
-app.include_router(prefix='/ofdm', router=ofdm_router)
+app.include_router(prefix='/generate', router=generate_router)
+app.include_router(prefix='/process', router=process_router)
 
 
 class Marray(BaseModel):
     boasdad: str
     arr: list
-
 
 
 class Matlab_data(BaseModel):
@@ -37,35 +34,28 @@ class Matlab_data(BaseModel):
     imag_data: list = []
 
 
-
 @app.get("/OFDM/{fftsize}/{Modulation_order}")
 async def get_ofdm_no_pilots(fftsize: int, Modulation_order: int):
-
     arr = generate_ofdm_nopilots(fftsize, Modulation_order)
     response = np_complex_arr_to_json(arr)
 
     return response
 
 
-
 @app.get("/pOFDM/{fftsize}/{Modulation_order}/{pilots_num}")
 async def read_root_t(fftsize: int, Modulation_order: int, pilots_num: int):
-
     arr, a, c = generate_ofdm_withpilots(fftsize, Modulation_order, pilots_num)
     response = np_complex_arr_to_json(arr)
 
     return response
 
 
-
 @app.post('/process_integers/')
 async def process_ofdm_data(data: Marray):
-    
     print(data)
     print(data.boasdad)
     print(data.arr)
     print(type(data.arr))
-
 
 
 @app.post('/post_marr/')
@@ -76,19 +66,11 @@ async def process_marr(data: Marray):
     return payload
 
 
-
 @app.post('/get_fft/')
 async def get_fft(data: Matlab_data):
-
-    # create one complex values array from two real values arrays
     complex_data = np.vectorize(complex)(data.real_data, data.imag_data)
-
-    # make a simple fft operation
     ffted_data = np.fft.fft(complex_data)
-
-    # convert complex numpy array into json format
     response_data = np_complex_arr_to_json(ffted_data)
-
 
     return response_data
 
