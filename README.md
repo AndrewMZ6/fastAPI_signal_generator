@@ -11,3 +11,12 @@ Libs used:
 - Numpy
 - Commpy
 - FastApi (and it's dependencies)
+- SQLAlchemy
+
+
+The planned design of the application is pictuded below   
+![Пустой диаграммой (18)](https://github.com/AndrewMZ6/fastAPI_signal_generator/assets/40640833/3d06bd2c-302f-41c8-bc66-12ef490fac86)
+
+
+
+to do:  

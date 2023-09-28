@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from generate.router import router as generate_router
 from process.router import router as process_router
 
+
 from data_processing.process_data import (
                                             generate_ofdm_nopilots,
                                             np_complex_arr_to_json,
@@ -18,9 +19,11 @@ from data_processing.process_data import (
                                           )
 
 
-app = FastAPI()
+
+app = FastAPI(title='Ofdm buddy')
 app.include_router(prefix='/generate', router=generate_router)
 app.include_router(prefix='/process', router=process_router)
+
 
 
 class Marray(BaseModel):
@@ -110,6 +113,21 @@ async def generate_error():
 #   2. seek through pydantic models
 #   3. may be improve matlab client interaction
 #   4. add some database interaction 
+
+
+# @app.get('/test-api/arg1')
+# async def test_arg1():
+#     return {'response':'test-arg1'}
+
+
+
+
+# @app.get('/test-api')
+# async def test1():
+#     return {'response':'test1'}
+
+
+
 
 
 
