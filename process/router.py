@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from data_processing.process_data import get_ofdm_fftsize_modorder, get_ofdm_fft_bw_fs
+
 
 
 router = APIRouter()
@@ -14,6 +14,6 @@ async def index():
 
 
 @router.get('/correlate')
-async def correlate_signals(data: DataModel):
+async def correlate_signals():
 	response = operations_dispatcher.process(data, 'correlate')
-    return response
+	return response

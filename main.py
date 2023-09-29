@@ -8,14 +8,7 @@ from pydantic import BaseModel
 from generate.router import router as generate_router
 from process.router import router as process_router
 
-from data_processing.process_data import (
-                                            generate_ofdm_nopilots,
-                                            np_complex_arr_to_json,
-                                            generate_ofdm_withpilots,
-                                            addzeros,
-                                            use_ofdm_carrier_signal,
-                                            np_arr_to_json
-                                          )
+
 
 
 
@@ -24,7 +17,7 @@ app.include_router(prefix='/generate', router=generate_router)
 app.include_router(prefix='/process', router=process_router)
 
 
-
+'''
 
 class Marray(BaseModel):
     boasdad: str
@@ -107,6 +100,9 @@ async def generate_error():
     }
 
     return json.dumps(error_message)
+'''
+
+
 
 # TODO:
 #   1. look up some routing thingy
@@ -131,5 +127,5 @@ async def generate_error():
 
 
 
-if __name__ == '__main__':
-    uvicorn.run(app=app, host=settings.app_host, port=settings.app_port, loop='auto')
+# if __name__ == '__main__':
+#     uvicorn.run(app=app, host=settings.app_host, port=settings.app_port, loop='auto')

@@ -1,4 +1,11 @@
-from data_processing import ofdm_fft_morder_bw_fs_fc, ofdm_fft_morder
+from pathlib import Path
+import sys
+path = Path().cwd().parent
+sys.path.append(str(path))
+
+
+
+from data_processing.process_data import ofdm_fft_morder_bw_fs_fc, ofdm_fft_morder, np_complex_arr_to_json
 
 
 def real_valued_handler(request_parameters: dict):
@@ -21,7 +28,7 @@ def complex_valued_handler(request_parameters: dict):
 	fftsize = request_parameters['fftsize']
 	morder = request_parameters['modulation_order']
 	result = ofdm_fft_morder(fftsize, morder)
-	return result
+	return np_complex_arr_to_json(result)
 
 
 class OparationsDispatcher:
@@ -44,4 +51,8 @@ class OparationsDispatcher:
 
 
 # this thing is going to be exported
-opertations_dispatcher = OparationsDispatcher()
+op_dispatcher = OparationsDispatcher()
+
+
+if __name__ == '__main__':
+	print(op_dispatcher)

@@ -1,5 +1,11 @@
 from fastapi import APIRouter
-from services.operations_dispatcher import operations_dispatcher
+from pathlib import Path
+import sys
+path = Path().cwd().parent.parent
+print(path)
+print(sys.path)
+sys.path.append(str(path))
+from services.operations_dispatcher import op_dispatcher as operations_dispatcher
 
 
 router = APIRouter()
@@ -12,16 +18,16 @@ async def index():
 		'page':'index'
 	}
 
-@router.get('complex/fftsize/{fftsize}/morder/{modulation_order}')
+@router.get('/complex/fftsize/{fftsize}/morder/{modulation_order}')
 async def get_ofdm_no_pilots(fftsize: int, modulation_order: int):
 	request_parameters = {
 		'fftsize':fftsize,
 		'modulation_order':modulation_order
 	}
-	response = await operations_dispatcher.generate(request_parameters)
+	response = operations_dispatcher.generate(request_parameters)
 	return response
 
-@router.get('real/fftsize/{fftsize}/morder/{modulation_order}/bw/{BW}/fs/{fs}/fc/{fc}')
+@router.get('/real/fftsize/{fftsize}/morder/{modulation_order}/bw/{BW}/fs/{fs}/fc/{fc}')
 async def get_ofdm_fft_bw_fs(fftsize: int, modulation_order: int, BW: float, fs: float, fc: float):
 	request_parameters = {
 		'fftsize':fftsize,
@@ -30,7 +36,7 @@ async def get_ofdm_fft_bw_fs(fftsize: int, modulation_order: int, BW: float, fs:
 		'fs':fs,
 		'fc':fc
 	}
-	response = await operations_dispatcher.generate(request_parameters)
+	response = operations_dispatcher.generate(request_parameters)
 	return response
 
 
