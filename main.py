@@ -8,7 +8,6 @@ from pydantic import BaseModel
 from generate.router import router as generate_router
 from process.router import router as process_router
 
-
 from data_processing.process_data import (
                                             generate_ofdm_nopilots,
                                             np_complex_arr_to_json,
@@ -23,6 +22,7 @@ from data_processing.process_data import (
 app = FastAPI(title='Ofdm buddy')
 app.include_router(prefix='/generate', router=generate_router)
 app.include_router(prefix='/process', router=process_router)
+
 
 
 
