@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+	<input name="searchTxt" type="text" maxlength="512" id="fftsize" class="searchField"/>
+	<input name="searchTxt" type="text" maxlength="512" id="morder" class="searchField"/>
+	<button onclick=fetchdata()> data </button>
+	<p id='myclass'> </p>
+
+	<script type="text/javascript">
+			async function fetchdata(){
+				let fftsize = document.getElementById("fftsize").value;
+				let morder = document.getElementById("morder").value;
+				console.log(typeof fftsize);
+				let response = await fetch('https://ofdm-buddy.onrender.com/generate/ofdm/complex/fftsize/' + fftsize + '/morder/' + morder);
+				let data = await response.json();
+				let rr = data.split(',');
+				document.getElementById('myclass').innerHTML = rr;
+				// console.log(data);
+			}
+
+
+	</script>
+	
+</body>
+
+
+</html>
