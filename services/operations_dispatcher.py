@@ -31,7 +31,7 @@ def complex_valued_handler(request_parameters: dict):
 	return np_complex_arr_to_json(result)
 
 
-class OparationsDispatcher:
+class OperationsDispatcher:
 
 	def _decision_maker(self, request_parameters: dict):
 		L = list(request_parameters.keys())
@@ -51,7 +51,7 @@ class OparationsDispatcher:
 
 
 # this thing is going to be exported
-op_dispatcher = OparationsDispatcher()
+op_dispatcher = OperationsDispatcher()
 
 
 if __name__ == '__main__':

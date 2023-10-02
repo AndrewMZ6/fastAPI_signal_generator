@@ -2,8 +2,6 @@ from fastapi import APIRouter
 from pathlib import Path
 import sys
 path = Path().cwd().parent.parent
-print(path)
-print(sys.path)
 sys.path.append(str(path))
 from services.operations_dispatcher import op_dispatcher as operations_dispatcher
 

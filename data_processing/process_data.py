@@ -94,7 +94,7 @@ def ofdm_fft_morder(fftsize: int, M_order: int) -> np.ndarray:
     payLoadBits_per_OFDM = K*mu                                             # number of payload bits per OFDM symbol
     bits = np.random.randint(low=0, high=2, size=payLoadBits_per_OFDM)      # generate random bits
     
-    M = cp.modulation.QAMModem(2**mu)
+    M = cp.modulation.QAMModem(M_order)
     modBits = M.modulate(bits)
     ofdmSymbol = np.concatenate([np.zeros(gsize, dtype=complex), modBits[:int(K/2)], np.zeros(1, dtype=complex), modBits[int(K/2):], np.zeros(gsize-1, dtype=complex)])
     ofdmSymbolShifted = SHIFT(ofdmSymbol)
