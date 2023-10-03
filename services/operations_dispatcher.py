@@ -25,8 +25,8 @@ def real_valued_handler(request_parameters: dict):
 
 
 def complex_valued_handler(request_parameters: dict):
-	fftsize = request_parameters['fftsize']
-	morder = request_parameters['modulation_order']
+	fftsize = request_parameters.fftsize
+	morder = request_parameters.morder
 	result = ofdm_fft_morder(fftsize, morder)
 	return np_complex_arr_to_json(result)
 
@@ -34,8 +34,7 @@ def complex_valued_handler(request_parameters: dict):
 class OperationsDispatcher:
 
 	def _decision_maker(self, request_parameters: dict):
-		L = list(request_parameters.keys())
-		if 'fc' in L:							# not sofisticated at all :)
+		if hasattr(request_parameters, 'fc'):							# not sofisticated at all :)
 			return real_valued_handler
 		return complex_valued_handler
 
