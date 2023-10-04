@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body><!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+	<label for="fftsize">Fourier size:</label>
+	<input name="fftsize" type="text" maxlength="5" id="fftsize" class="searchField"/>
+	<!-- <input name="searchTxt" type="text" maxlength="512" id="morder" class="searchField"/> -->
+	<label for="morder">Modulation order:</label>
+	  <select name="morder" id="morder">
+	    <option value="4">4</option>
+	    <option value="16">16</option>
+	    <option value="32">32</option>
+	    <option value="64">64</option>
+	  </select>
+
+
+	<button onclick=fetchdata()> data </button>
+	<p id='myclass'> </p>
+
+	<script type="text/javascript">
+			async function fetchdata(){
+				let fftsize = document.getElementById("fftsize").value;
+				let morder = document.getElementById("morder").value;
+				console.log(typeof fftsize);
+				let response = await fetch('https://ofdm-buddy.onrender.com/generate/ofdm/complex/fftsize/' + fftsize + '/morder/' + morder);
+				let data = await response.json();
+				let rr = data.split(',');
+				document.getElementById('myclass').innerHTML = rr;
+				console.log(rr.length);
+			}
+
+
+	</script>
+	
+</body>
+
+
+</html>
+
+	
+</body>
+
+
+</html>
