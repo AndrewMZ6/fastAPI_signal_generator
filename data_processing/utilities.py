@@ -29,7 +29,7 @@ class TQAMModem(cp.QAMModem):
 
 
 if __name__ == '__main__':
-    bits = np.random.randint(low=0, high=2, size=-1)
+    bits = np.random.randint(low=0, high=2, size=19)
     qam4 = TQAMModem(16)
     moddata = qam4.tmodulate(bits)
 
