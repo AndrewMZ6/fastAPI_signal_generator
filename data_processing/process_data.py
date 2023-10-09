@@ -1,7 +1,7 @@
 import numpy as np
 import json
 import commpy as cp
-from utilities import TQAMModem
+from .utilities import TQAMModem
 
 
 def IDFT(s):
