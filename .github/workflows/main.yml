@@ -15,7 +15,7 @@ jobs:
         run: echo "hello world from TYAML"
 
       - name: PIP install
-        run: pip install -r requirements.txt
+        run: pip install -r fastAPI_signal_generator/requirements.txt
 
       - name: RUN FAST API
         run: uvicorn main:app --port=8090
