@@ -1,0 +1,16 @@
+name: My-cations
+
+on:
+  push:
+    branches: 
+      - main
+    
+
+jobs:
+  my-testing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Print ASDADAD
+        run: echo "hello world from TYAML"
+
