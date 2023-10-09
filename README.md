@@ -2,6 +2,9 @@
 fast api service for getting typical signals  
 The application is used to fast get typical OFDM signals for testing purposes remotely  
 
+status of last deployment  <br/>
+https://github.com/AndrewMZ6/fastAPI_signal_generator/actions/workflows/My-cations/badge.svg
+
 Future plans:		
 - define endpoints for OFDM with pilots 
 - define endpoints for OFDM without pilots
