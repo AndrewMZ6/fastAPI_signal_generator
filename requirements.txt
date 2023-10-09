@@ -2,3 +2,4 @@ fastapi
 numpy
 scikit-commpy
 uvicorn[standard]
+typing-extensions

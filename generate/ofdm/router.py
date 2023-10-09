@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Path as fastApiPath, HTTPException
-from typing import Annotated
+from typing_extenstions import Annotated
 from pathlib import Path
 import sys
 path = Path(__file__).parents[1]
