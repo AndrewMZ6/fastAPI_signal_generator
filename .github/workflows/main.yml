@@ -20,7 +20,10 @@ jobs:
       - name: PIP install
         run: pip install -r requirements.txt
 
-      - name: RUN FAST API
-        run: uvicorn main:app --port=8090
+      #- name: RUN FAST API
+      #  run: uvicorn main:app --port=8090
+
+      - name: show python version
+        run: python --version
 
     
