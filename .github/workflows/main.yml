@@ -14,8 +14,13 @@ jobs:
       - name: Print ASDADAD
         run: echo "hello world from TYAML"
 
+      - name: cloning 
+        uses: actions/checkout@v1
+
       - name: PIP install
         run: pip install -r fastAPI_signal_generator/requirements.txt
 
       - name: RUN FAST API
         run: uvicorn main:app --port=8090
+
+    
