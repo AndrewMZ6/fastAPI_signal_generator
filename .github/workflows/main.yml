@@ -15,7 +15,7 @@ jobs:
         run: echo "hello world from TYAML"
 
       - name: cloning 
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: PIP install
         run: pip install -r requirements.txt
