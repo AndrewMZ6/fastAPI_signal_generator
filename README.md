@@ -22,4 +22,14 @@ The planned design of the application is pictuded below
 
 
 
-to do:  
+## Docker command to build the image:
+
+```
+docker build -t myimage .
+```   
+
+## Docker command to run the container:
+
+```
+docker run -d --name mycontainer -p 8088:8088 myimage
+```   

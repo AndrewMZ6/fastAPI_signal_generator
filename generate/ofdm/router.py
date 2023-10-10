@@ -2,11 +2,16 @@ from fastapi import APIRouter, Path as fastApiPath, HTTPException
 from typing_extensions import Annotated
 from pathlib import Path
 import sys
+print(sys.path)
+import numpy as np
+from .pydantic_models import FftsizeMorder
+
+from services.operations_dispatcher import op_dispatcher \
+									as operations_dispatcher
+
+
 path = Path(__file__).parents[1]
 sys.path.append(str(path))
-from services.operations_dispatcher import op_dispatcher as operations_dispatcher
-from .pydantic_models import FftsizeMorder
-import numpy as np
 
 
 router = APIRouter()
@@ -32,19 +37,23 @@ async def get_ofdm_no_pilots(
 
 
 @router.get('/real/fftsize/{fftsize}/morder/{modulation_order}/bw/{BW}/fs/{fs}/fc/{fc}')
-async def get_ofdm_fft_bw_fs(fftsize: int, modulation_order: int, BW: float, fs: float, fc: float):
+async def get_ofdm_fft_bw_fs(
+							fftsize: int,
+							modulation_order: int,
+							BW: float,
+							fs: float,
+							fc: float):
 	request_parameters = {
-		'fftsize':fftsize,
-		'modulation_order':modulation_order,
-		'bw':BW,
-		'fs':fs,
-		'fc':fc
+		'fftsize': fftsize,
+		'modulation_order': modulation_order,
+		'bw': BW,
+		'fs': fs,
+		'fc': fc
 	}
 	response = operations_dispatcher.generate(request_parameters)
 	return response
 
 
-
 if __name__ == '__main__':
-	print(FftsizeMorder)
-	help(HTTPException)
+	print(sys.path)
+	
