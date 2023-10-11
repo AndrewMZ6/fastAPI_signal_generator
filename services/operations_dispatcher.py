@@ -9,11 +9,11 @@ from data_processing.process_data import ofdm_fft_morder_bw_fs_fc, ofdm_fft_mord
 
 
 def real_valued_handler(request_parameters: dict):
-	fftsize = request_parameters['fftsize']
-	morder = request_parameters['modulation_order']
-	bw = request_parameters['bw']
-	fs = request_parameters['fs']
-	fc = request_parameters['fc']
+	fftsize = request_parameters.fftsize
+	morder = request_parameters.morder
+	bw = request_parameters.bandwidth
+	fs = request_parameters.fs
+	fc = request_parameters.fc
 	result = ofdm_fft_morder_bw_fs_fc(
 										fftsize,
 										morder,

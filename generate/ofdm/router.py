@@ -4,7 +4,7 @@ from pathlib import Path
 import sys
 print(sys.path)
 import numpy as np
-from .pydantic_models import FftsizeMorder
+from .pydantic_models import FftsizeMorder, RealValuedRequest
 
 from services.operations_dispatcher import op_dispatcher \
 									as operations_dispatcher
@@ -43,13 +43,13 @@ async def get_ofdm_fft_bw_fs(
 							BW: float,
 							fs: float,
 							fc: float):
-	request_parameters = {
-		'fftsize': fftsize,
-		'modulation_order': modulation_order,
-		'bw': BW,
-		'fs': fs,
-		'fc': fc
-	}
+	request_parameters = RealValuedRequest(
+		fftsize=fftsize,
+		morder=modulation_order,
+		bandwidth=BW,
+		fs=fs,
+		fc=fc
+	)
 	response = operations_dispatcher.generate(request_parameters)
 	return response
 

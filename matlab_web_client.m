@@ -18,7 +18,7 @@ y = cellfun(@str2double, jsondecode(x));
 y_matlab = fft(signal_to_load);
 
 figure;
-    plot(abs(xcorr(y, y_matlab)));
+    plot(abs(xcorr(y, y2_matlab)));
     title('correlation of matlab fft and fastapi fft');
     
     
