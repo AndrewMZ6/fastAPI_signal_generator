@@ -5,10 +5,9 @@ The application is used to fast get typical OFDM signals for testing purposes re
 status of last deployment  <br/>
 <img src="https://github.com/AndrewMZ6/fastAPI_signal_generator/actions/workflows/main.yml/badge.svg?branch=main"> <br>
 
-Future plans:		
-- define endpoints for OFDM with pilots 
-- define endpoints for OFDM without pilots
-- define endpoints for QAM modulation  
+The API provides:		
+ - acquire complex ofdm signal
+ - make and fast fourier transform of an array
 
 Libs used:
 - Numpy
