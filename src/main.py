@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
-from generate.router import router as generate_router
-from process.router import router as process_router
+from data_processing.generate.router import router as generate_router
+from data_processing.process.router import router as process_router
 from frontend.router import router as frontend_router
 
 

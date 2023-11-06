@@ -7,13 +7,9 @@ The dispatcher is able to generate complex or real valued
 of signal, depending of the request attrs. The functions for 
 signal generation are imported from 'data_processing' module.
 """
-
-from pathlib import Path
-import sys
-path = Path().cwd().parent
-sys.path.append(str(path))
-
-from data_processing.process_data import ofdm_fft_morder_bw_fs_fc, ofdm_fft_morder, np_complex_arr_to_json
+from data_processing.process_data import (ofdm_fft_morder_bw_fs_fc,
+											ofdm_fft_morder,
+										 	np_complex_arr_to_json)
 
 
 def real_valued_handler(request_parameters: dict):

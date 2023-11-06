@@ -1,14 +1,10 @@
 from fastapi import APIRouter, Path as fastApiPath
 from typing_extensions import Annotated
-from pathlib import Path
-import sys
-from .pydantic_models import FftsizeMorder, RealValuedRequest
 
+from .pydantic_models import FftsizeMorder, RealValuedRequest
 from services.operations_dispatcher import op_dispatcher as operations_dispatcher
 
 
-path = Path(__file__).parents[1]
-sys.path.append(str(path))
 router = APIRouter()
 
 
@@ -42,4 +38,3 @@ async def get_ofdm_fft_bw_fs(
 	response = operations_dispatcher.generate(request_parameters)
 
 	return response
-	
